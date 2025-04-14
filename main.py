@@ -56,17 +56,13 @@ class ElectronBrowser(QMainWindow):
         self.tabs.tabCloseRequested.connect(self.close_tab)
         self.tabs.currentChanged.connect(self.update_url_bar_from_tab)
 
-        # Create a layout to hold the tabs and the "New Tab" button
-        self.tab_layout = QHBoxLayout()
-        self.tab_layout.addWidget(self.tabs)
-
-        # Add a "New Tab" button to the far right
+        # Add a "New Tab" button as a corner widget
         self.new_tab_btn = QPushButton("+")
         self.new_tab_btn.setStyleSheet("background-color: green; color: white;")
         self.new_tab_btn.setMaximumWidth(30)
         self.new_tab_btn.setMaximumHeight(30)
         self.new_tab_btn.clicked.connect(lambda: self.add_new_tab(QUrl("http://google.com"), "New Tab"))
-        self.tab_layout.addWidget(self.new_tab_btn)
+        self.tabs.setCornerWidget(self.new_tab_btn, Qt.TopRightCorner)
 
         # Add the first tab
         self.add_new_tab(QUrl("http://google.com"), "New Tab")
@@ -79,7 +75,7 @@ class ElectronBrowser(QMainWindow):
 
         # Main layout
         self.layout.addLayout(self.horizontal)
-        self.layout.addLayout(self.tab_layout)
+        self.layout.addWidget(self.tabs)
 
         # Set the central widget
         central_widget = QWidget()
